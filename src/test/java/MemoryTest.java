@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
-import 개션된컨벤션.UserDto;
-import 잘못된컨벤션.userDTO;
+import day1.개션된컨벤션.UserDto;
+import day1.잘못된컨벤션.userDTO;
 
 import java.util.ArrayList;
 import java.util.List;
