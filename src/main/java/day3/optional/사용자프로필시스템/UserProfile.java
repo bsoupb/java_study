@@ -11,5 +11,5 @@ public class UserProfile {
     private String userId;
     private String name;
     private String email;
-    private String address;
+    private Address address;
 }

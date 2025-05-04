@@ -1,5 +1,6 @@
-import org.junit.jupiter.api.Test;
 import day1.개션된컨벤션.UserDto;
+import org.junit.jupiter.api.Test;
+
 import day1.잘못된컨벤션.userDTO;
 
 import java.util.Arrays;
@@ -16,13 +17,13 @@ public class PerformanceTest {
             try {
                 oldStyle.Setusername(null);
             } catch (Exception e) {
-                // 예외 무시
+                // 예외무시
             }
         }
 
         long endTimeOld = System.nanoTime();
 
-        // 개선된 코드
+        // 개선된코드
         UserDto newStyle = new UserDto();
         long startTimeNew = System.nanoTime();
         for (int i = 0; i < 1000000; i++) {
@@ -52,10 +53,8 @@ public class PerformanceTest {
     private int calculateComplexity(Class<?> clazz) {
         return Arrays.stream(clazz.getMethods())
                 .mapToInt(method -> {
-                    int complexity =  1;
-
+                    int complexity = 1;
                     complexity += method.getParameterCount();
-
                     complexity += method.getExceptionTypes().length;
                     return complexity;
                 })

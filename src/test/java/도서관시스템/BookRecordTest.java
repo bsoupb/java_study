@@ -1,3 +1,5 @@
+package 도서관시스템;
+
 import day1.도서관시스템.BookRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BookRecordTest {
 
-    // given -> 테스트를 위한 준비 단계
-    // when  -> 시점
-    // then  -> 어떤 결과가 나올 것인지 생각하는지
+    // given
+    // when
+    // then
 
     @Test
     @DisplayName("생성자 테스트 - 정상케이스")
@@ -51,5 +53,4 @@ public class BookRecordTest {
 
         assertTrue(ex.getMessage().contains("ISBN must not be null"));
     }
-
 }

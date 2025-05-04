@@ -22,19 +22,19 @@ public class LogAnalyzer {
 
 
         // 2. 시간대 별 로그 수 집계 Map<Integer, Long>
-//        logs.stream()
-//                .collect(Collectors.groupingBy(log ->
-//                        log.getTimestamp().getHour()),
-//                        Collectors.counting());
+        Map<Integer, Long> logsByHour = logs.stream()
+                .collect(Collectors.groupingBy(log ->
+                                log.getTimestamp().getHour(),
+                        Collectors.counting()));
 
         // 3. 특정 키워드를 포함한 로그 검색 List<LogEntry>
         String keyword = "Exception";
-        logs.stream()
+        List<LogEntry> exceptionLogs = logs.stream()
                 .filter(log -> log.getMessage().contains(keyword))
                 .sorted(Comparator.comparing(LogEntry::getTimestamp))
                 .toList();
         // 4. 로그 레벨 별 메시지 연결 Map<String, String>
-        logs.stream()
+        Map<String, String> concatenateMessages = logs.stream()
                 .collect(Collectors.groupingBy(
                         LogEntry::getLevel,
                         Collectors.mapping(

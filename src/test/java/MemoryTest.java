@@ -1,5 +1,6 @@
-import org.junit.jupiter.api.Test;
 import day1.개션된컨벤션.UserDto;
+import org.junit.jupiter.api.Test;
+
 import day1.잘못된컨벤션.userDTO;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class MemoryTest {
         for(int i = 0; i < 100000; i++) {
             newStyleObjects.add(new UserDto());
         }
+
         usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
         System.out.printf("Memory used by new style: %d bytes%n", usedMemoryAfter - usedMemoryBefore);
     }

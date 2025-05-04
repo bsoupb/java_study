@@ -17,15 +17,15 @@ public class UserProfileService {
     /*
         사용자의 주소를 형식화된 문자열로 변환하는 메소드
      */
-//    public String getDisplayAddress(String userId) {
-//        return findUserById(userId)     // 사용자 조회
-//                .map(UserProfile::getAddress)   // 주소 객체 추출
-//                .map(address -> String.format("%s %s %s",   // 주소 포맷팅
-//                        address.getStreet(),
-//                        address.getCity(),
-//                        address.getZipCode()))
-//                .orElse("주소 정보 없음");        // 주소가 없을 경우 기본값 제공
-//    }
+    public String getDisplayAddress(String userId) {
+        return findUserById(userId)                 // 사용자 조회
+                .map(UserProfile::getAddress)       // 주소 객체 추출
+                .map(address -> String.format("%s %s %s",   // 주소 포맷팅
+                        address.getStreet(),
+                        address.getCity(),
+                        address.getZipCode()))
+                .orElse("주소 정보 없음");        // 주소가 없을 경우 기본값 제공
+    }
 
     /*
         1. 사용자의 이메일을 반환하는 메서드

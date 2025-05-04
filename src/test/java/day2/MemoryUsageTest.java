@@ -2,6 +2,7 @@ package day2;
 
 import day2.예제2.Logger;
 import day2.예제2.LoggerFactory;
+import day2.예제2.LoggerType;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
