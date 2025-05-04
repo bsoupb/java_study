@@ -19,19 +19,25 @@ public class GradeManagementService {
     }
 
     /*
-        학생의 특정 과목을 조회하는 메서드
+        학생의 특정 과목의 성적을 조회하는 메서드
         parameter: studentId, 과목명 subject
         return 성적을 담은 Optional (빈 Optional)
      */
 
-    public Optional<Integer> findSubject(String studentId, String subject) {
-        return findStudent(studentId)
-                .map(student -> student.getGrade(subject))
-                .orElse(Optional.empty());
-    }
+//    public Optional<Integer> findSubject(String studentId, String subject) {
+//        return findStudent(studentId)
+//                .map(student -> student.getGrade(subject))
+//                .orElse(Optional.empty());
+//    }
 
     public Optional<Integer> findSubjectFlatMap(String studentId, String subject) {
         return findStudent(studentId).flatMap(student -> student.getGrade(subject));
+    }
+
+    // teacher
+    public Optional<Integer> getStudentGrade(String studentId, String subject) {
+        return findStudent(studentId)
+                .flatMap(student -> student.getGrade(subject));
     }
 
     /*
@@ -56,6 +62,20 @@ public class GradeManagementService {
 //                .orElse(Optional.empty());
 //    }
 
+    // teacher
+    public Optional<Double> calculateAverageGrade(String studentId) {
+        return findStudent(studentId)
+                .map(student -> {
+                    Map<String, Integer> grades = student.getGrades();
+                    return grades.isEmpty() ?
+                            Optional.<Double>empty() :
+                            Optional.of(grades.values().stream()
+                                    .mapToInt(Integer::intValue)
+                                    .average()
+                                    .orElse(0.0));   // 절대 null이 될 수 없음
+                })
+                .orElse(Optional.empty());
+    }
 
     /*
         학생의 전공 과목(있는 경우) 성적을 조회하는 메서드
@@ -70,14 +90,32 @@ public class GradeManagementService {
                 .orElse("message");
     }
 
+    // teacher
+    public String getMajorSubjectGrade(String studentId, String majorSubject) {
+        return findStudent(studentId)
+                .flatMap(Student::getMajor)
+                .map(major -> {
+                    return findStudent(studentId)
+                            .flatMap(student -> student.getGrade(majorSubject))
+                            .map(grade -> String.format("%s 전공 학생의 %s 성적: %d", major, majorSubject, grade))
+                            .orElse(String.format("%s 전공 학생이지만 %s 과목 성적이 없습니다.", major, majorSubject));
+                })
+                .orElse("학생을 찾을 수 없거나 전공 정보가 없습니다.");
+    }
+
     /*
         성적 우수 학생 목록을 반환하는 메서드 (특정 점수 이상)
         @param subject 과목명
         @param minGrade 최소 성적 기준
         @return 성적 우수 학생 이름 목록
      */
-    public List<String> studentName(String subject, int minGrade) {
-        return
+    public List<String> getTopStudentsInSubject(String subject, int minGrade) {
+        return students.values().stream()
+                .filter(student -> student.getGrade(subject)
+                        .filter(grade -> grade >= minGrade)
+                        .isPresent())
+                .map(Student::getName)
+                .toList();
     }
 
     /*
@@ -85,11 +123,23 @@ public class GradeManagementService {
         @param studentId 학생 ID
         @return 성적 요약 문자열, 학생이 없으면 기본 메시지 반환
      */
-    public Optional<String> summaryGrade(String studentId) {
+    public String gradeSummary(String studentId) {
+        // ifPresentOrElse()
         return findStudent(studentId)
-                .map(student -> student.getMajor(studentId))
-                .map(major -> major)
+                .map(student -> {
+                    // 평균 성적
+                    double average = calculateAverageGrade(studentId)
+                            .orElse(0.0);
 
+                    // 전공 정보 포함 (있는 경우)
+                    String majorInfo = student.getMajor()
+                            .map(major -> "전공: " + major)
+                            .orElse("전공 미정");
+
+                    return String.format("학생: %s, %s, 평균 성적: %.1f",
+                            student.getName(), majorInfo, average);
+                })
+                .orElse("학생 정보를 찾을 수 없습니다");
     }
 
 }

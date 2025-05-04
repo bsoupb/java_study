@@ -21,6 +21,12 @@ public class OrderProcessor {
 
         System.out.println(sumPrice);
 
+        // teacher
+        double totalAmount = Objects.requireNonNull(orders).stream()
+                .flatMap(order -> order.getProducts().stream())
+                .mapToDouble(Product::getPrice)
+                .sum();
+
 
         // 2. 카테고리별 판매 금액 집계
         // flatMap, grouping by, summingDouble
@@ -30,20 +36,47 @@ public class OrderProcessor {
 
         System.out.println(sumPriceByCategory);
 
+        // teacher
+        Map<String, Double> categorySales = orders.stream()
+                .flatMap(order -> order.getProducts().stream())
+                        .collect(Collectors.groupingBy(
+                                Product::getCategory,
+                                Collectors.summingDouble(Product::getPrice)
+                        ));
+
 
         // 3. 최근 24시간 내 주문 필터링
+        LocalDateTime oneDay = LocalDateTime.now().minusHours(24);
         List<Order> recentOrder = orders.stream()
-                .filter(order -> order.getOrderDate().isAfter(LocalDateTime.now().minusHours(24)))
+                .filter(order -> order.getOrderDate().isAfter(oneDay))
                 .toList();
 
         System.out.println(recentOrder);
 
+
+        // teacher
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+        List<Order> recentOrders = orders.stream()
+                .filter(order -> order.getOrderDate().isAfter(yesterday))
+                .toList();
+
         // 4. 고객별 주문 횟수 및 총 금액 집계 (추가 예제)
+        Map<String, Double> orderCountAndTotalPriceByCustomer = orders.stream()
+                .collect(Collectors.groupingBy(Order::getCustomerName,
+                        Collectors.summingDouble(order ->
+                                order.getProducts().stream().mapToDouble(Product::getPrice).sum())));
 
-//        orders.stream()
-//                .flatMap(order -> order.getProducts().stream())
-//                .collect(Collectors.groupingBy(Order::getCustomerName, Collectors.summingDouble(Product::getPrice)));
+        System.out.println(orderCountAndTotalPriceByCustomer);
 
+        // teacher
+        Map<String, Double> addExample = orders.stream()
+                .collect(Collectors.groupingBy(
+                        Order::getCustomerName,
+                        Collectors.summingDouble(order ->
+                                order.getProducts().stream()
+                                        .mapToDouble(Product::getPrice)
+                                        .sum()
+                        )));
     }
 
     private static List<Order> getOrders() {

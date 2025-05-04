@@ -29,7 +29,7 @@ public class Student {
     }
 
     // 학생 전공을 조회하는 메서드 (Null 될 수 있음)
-    public Optional<String> getMajor(String id) {
+    public Optional<String> getMajor() {
         return Optional.ofNullable(major);
     }
 }
