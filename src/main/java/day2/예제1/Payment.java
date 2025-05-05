@@ -11,5 +11,4 @@ enum PaymentStatus {
 public interface Payment {
     void processPayment(BigDecimal amount);
     PaymentStatus getStatus();
-    
 }

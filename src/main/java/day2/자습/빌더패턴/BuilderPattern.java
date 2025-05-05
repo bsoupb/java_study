@@ -1,6 +1,4 @@
-package day2.자습;
-
-import java.util.Objects;
+package day2.자습.빌더패턴;
 
 public class BuilderPattern {
     /*

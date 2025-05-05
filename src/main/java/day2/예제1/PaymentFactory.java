@@ -11,3 +11,8 @@ public class PaymentFactory {
         };
     }
 }
+
+
+/*
+    객체 생성만 담당
+ */

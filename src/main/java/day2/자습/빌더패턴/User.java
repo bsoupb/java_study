@@ -1,4 +1,4 @@
-package day2.자습;
+package day2.자습.빌더패턴;
 
 import java.util.Objects;
 
