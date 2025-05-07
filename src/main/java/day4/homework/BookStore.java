@@ -78,7 +78,9 @@ public class BookStore {
      * @return 생성된 도서
      */
     public Book addBook(Supplier<Book> supplier) {
-        return supplier.get();
+        Book newBook = supplier.get();
+        books.add(newBook);
+        return newBook;
     }
 
     /**
@@ -120,7 +122,7 @@ public class BookStore {
      */
     public List<Book> getLatestBooks(int limit) {
         return books.stream()
-                .sorted(List<Book>.comparingByValue().reversed())
+                .sorted(Comparator.comparing(Book::getYear).reversed())
                 .limit(limit)
                 .toList();
     }
@@ -132,9 +134,7 @@ public class BookStore {
      * @return 해당 저자의 도서 목록
      */
     public List<Book> getBooksByAuthor(String author) {
-        return books.stream()
-                .filter(book -> book.getAuthor().contains(author))
-                .toList();
+        return findBooks(book -> author.equals(book.getAuthor()));
     }
 
     /**
@@ -144,8 +144,14 @@ public class BookStore {
      * @return 정렬된 도서 목록
      */
     public List<Book> getBooksOrderedByRating(boolean ascending) {
+        Comparator<Book> comparator = Comparator.comparing(Book::getRating);
+
+        if(!ascending) {
+            comparator = comparator.reversed();
+        }
+
         return books.stream()
-                .sorted(book -> book.)
+                .sorted(comparator)
                 .toList();
     }
 
@@ -157,8 +163,8 @@ public class BookStore {
      */
     public Optional<Book> findBookByTitle(String title) {
         return books.stream()
-                .ofNullable(books.stream()
-                        .filter(book -> book.getTitle().equals(title)));
+                .filter(book -> book.getTitle().equals(title))
+                .findFirst();
     }
 
 
