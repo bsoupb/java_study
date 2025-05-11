@@ -1,0 +1,4 @@
+name,isManager,id,department,salary
+홍길동,false,1,개발팀,5000000
+김철수,false,2,마케팅팀,4500000
+이영희,true,3,개발팀,7000000

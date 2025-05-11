@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees>
+  <employee>
+    <name>홍길동</name>
+    <isManager>false</isManager>
+    <id>1</id>
+    <department>개발팀</department>
+    <salary>5000000</salary>
+  </employee>
+  <employee>
+    <name>김철수</name>
+    <isManager>false</isManager>
+    <id>2</id>
+    <department>마케팅팀</department>
+    <salary>4500000</salary>
+  </employee>
+  <employee>
+    <name>이영희</name>
+    <isManager>true</isManager>
+    <id>3</id>
+    <department>개발팀</department>
+    <salary>7000000</salary>
+  </employee>
+</employees>
