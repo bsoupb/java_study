@@ -13,6 +13,10 @@ public class DuckProcessor {
     }
 
     public FlyBehaviorStrategy getFlyBehaviorStrategy(String flyBehavior) {
+        if(flyBehavior == null) {
+            throw new IllegalArgumentException("값이 없습니다");
+        }
+
         return switch (flyBehavior.toLowerCase()) {
             case "noway" -> new FlyNoWayStrategy();
             case "wing" -> new FlyWithWingsStrategy();
