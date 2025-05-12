@@ -30,14 +30,4 @@ public class Duck {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Duck{" +
-                "name='" + name + '\'' +
-                ", species='" + species + '\'' +
-                ", habitat='" + habitat + '\'' +
-                ", flyBehavior='" + flyBehavior + '\'' +
-                ", speed=" + speed +
-                '}';
-    }
 }
