@@ -19,7 +19,8 @@ public class LoggerSingleton {
     }
 
     private LoggerSingleton() {
-
+        this.logFilePath = "application.log";
+        this.minLogLevel = LogLevel.INFO;
     }
 
     /**
@@ -34,6 +35,11 @@ public class LoggerSingleton {
 
     public static LoggerSingleton getInstance() {
         return LazyHolder.INSTANCE;
+    }
+
+    public void initialize(String logFilePath, LogLevel logLevel) {
+        this.logFilePath = logFilePath;
+        this.minLogLevel = logLevel;
     }
 
     /**
@@ -127,8 +133,5 @@ public class LoggerSingleton {
         return this.logFilePath;
     }
 
-    public void initialize(String logFilePath, LogLevel logLevel) {
-        this.logFilePath = logFilePath;
-        this.minLogLevel = logLevel;
-    }
+
 }

@@ -23,7 +23,26 @@ public class LoggerSingleton {
 
     private static final LoggerSingleton INSTANCE = new LoggerSingleton();
 
-    public LoggerSingleton() {
+    private LoggerSingleton() {
+        this.logFilePath = "application.log";
+        this.minLogLevel = LogLevel.INFO;
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println("[INIT] Logger initialized with level: " + minLogLevel);
+        } catch (IOException e) {
+            System.err.println("로그 파일 초기화 중 오류 발생: " + e.getMessage());
+        }
+    }
+
+    public void initialize(String logFilePath, LogLevel minLogLevel) {
+        this.logFilePath = logFilePath;
+        this.minLogLevel = minLogLevel;
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(logFilePath, true))) {
+            writer.println("[INIT] Logger re-initialized with level: " + minLogLevel);
+        } catch (IOException e) {
+            System.err.println("로그 파일 초기화 중 오류 발생: " + e.getMessage());
+        }
     }
 
     public static LoggerSingleton getInstance() {
@@ -131,8 +150,4 @@ public class LoggerSingleton {
         return this.logFilePath;
     }
 
-    public void initialize(String logFilePath, LogLevel logLevel) {
-        this.logFilePath = logFilePath;
-        this.minLogLevel = logLevel;
-    }
 }

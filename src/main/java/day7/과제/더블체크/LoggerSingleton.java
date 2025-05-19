@@ -36,7 +36,8 @@ public class LoggerSingleton {
     }
 
     private LoggerSingleton() {
-
+        this.logFilePath = "application.log";
+        this.minLogLevel = LogLevel.INFO;
     }
 
     public static LoggerSingleton getInstance() {
@@ -49,6 +50,13 @@ public class LoggerSingleton {
         }
         return instance;
     }
+
+
+    public void initialize(String logFilePath, LogLevel logLevel) {
+        this.logFilePath = logFilePath;
+        this.minLogLevel = logLevel;
+    }
+
 
     /**
      * 로그 메시지를 파일에 기록합니다.
@@ -142,10 +150,6 @@ public class LoggerSingleton {
         return this.logFilePath;
     }
 
-    public void initialize(String logFilePath, LogLevel logLevel) {
-        this.logFilePath = logFilePath;
-        this.minLogLevel = logLevel;
-    }
 
     public static void reset() {
         synchronized (LoggerSingleton.class) {
@@ -157,6 +161,7 @@ public class LoggerSingleton {
                 }
                 instance = null;
             }
+            // instance = null;     // 이거만 적어도 됨
         }
     }
 
